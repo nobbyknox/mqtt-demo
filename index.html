@@ -2,8 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Mosquitto Websockets</title>
-    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+    <title>MQTT Demo</title>
     <script src="mqttws31.js" type="text/javascript"></script>
     <script src="jquery.min.js" type="text/javascript"></script>
     <script src="config.js" type="text/javascript"></script>
@@ -73,7 +72,6 @@
         function onConnectionLost(response) {
             setTimeout(MQTTconnect, reconnectTimeout);
             $('#status').val("connection lost: " + responseObject.errorMessage + ". Reconnecting");
-
         }
 
         function onMessageArrived(message) {
@@ -84,9 +82,7 @@
             $('#ws').prepend('<li>[' + topic + '] ' + payload + '</li>');
 
             if (topic === 'vbx-con/2/ringing') {
-//                $('#' + payload + ' img').attr('src', 'img/red.jpg');
                 var flip = 0;
-
                 var timer = setInterval(function() {
                     flip = !flip;
                     $('#' + payload + ' img').attr('src', (flip ? 'img/red.jpg' : 'img/green.jpg'));
@@ -122,9 +118,9 @@
 
 <body>
     <h1>MQTT Demo</h1>
-    <div style="float: left; position: relative; width: 75%;">
+    <div style="float: left; position: relative; width: 60%;">
 
-        Subscribed to: <input type='text' id='topic' style="font-size: 14px;" />
+        Topic: <input type='text' id='topic' style="font-size: 14px;" />
 
         <div>
             Publish message:
@@ -163,34 +159,10 @@
             2004
         </div>
 
-        <!--
-        <table>
-            <tbody>
-                <tr>
-                    <td>Subscribed to:</td>
-                    <td><input type='text' id='topic' disabled /></td>
-                </tr>
-                <tr>
-                    <td>Status:</td>
-                    <td><input type='text' id='status' size="80" disabled/></td>
-                </tr>
-            </tbody>
-        </table>
-        -->
-
-        <!--<div>
-            Subscribed to:
-            <input type='text' id='topic' disabled />
-        </div>
-        <div>
-            Status:
-            <input type='text' id='status' size="80" disabled/>
-        </div>-->
-
     </div>
 
-    <div style="float: left; position: relative; width: 20%;">
-        <h4>History</h4>
+    <div style="float: left; position: relative; width: 35%;">
+        <h4 style="margin-top: 0">Events</h4>
         <ul id='ws'></ul>
     </div>
 
