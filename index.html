@@ -46,7 +46,7 @@
                 cleanSession: cleansession,
                 onSuccess: onConnect,
                 onFailure: function (message) {
-                    $('#status').val("Connection failed: " + message.errorMessage + "Retrying");
+                    $('#status').val("Connection failed: " + message.errorMessage + " Retrying...");
                     setTimeout(MQTTconnect, reconnectTimeout);
                 }
             };
@@ -65,13 +65,13 @@
         function onConnect() {
             $('#status').val('Connected to ' + host + ':' + port + path);
             // Connection succeeded; subscribe to our topic
-            mqtt.subscribe(topic, {qos: 0});
+            mqtt.subscribe(topic, {qos: 2});
             $('#topic').val(topic);
         }
 
         function onConnectionLost(response) {
             setTimeout(MQTTconnect, reconnectTimeout);
-            $('#status').val("connection lost: " + responseObject.errorMessage + ". Reconnecting");
+            $('#status').val("connection lost: " + responseObject.errorMessage + ". Reconnecting...");
         }
 
         function onMessageArrived(message) {
@@ -86,7 +86,7 @@
                 var timer = setInterval(function() {
                     flip = !flip;
                     $('#' + payload + ' img').attr('src', (flip ? 'img/red.jpg' : 'img/green.jpg'));
-                }, 700);
+                }, 600);
 
                 setTimeout(function() {
                     $('#' + payload + ' img').attr('src', 'img/red.jpg');
@@ -104,7 +104,7 @@
         function publishMessage() {
             message = new Paho.MQTT.Message($('#pub-mesg').val());
             message.destinationName = $('#topic').val();
-            message.qos = 0; //Number(qos);
+            message.qos = 2; //Number(qos);
             message.retained = false;
             mqtt.send(message);
         }
